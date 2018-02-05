@@ -2,14 +2,11 @@
 .db/*
 
 # dependencies
-/node_modules
-
-# testing
-/coverage
+node_modules/
 
 # production
 /build
-/src/static/js/bundle.js
+/Website/client/public/bundle.js
 
 # misc
 .DS_Store
