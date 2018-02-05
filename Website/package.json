@@ -1,0 +1,47 @@
+{
+  "name": "mean",
+  "version": "1.0.0",
+  "description": "MERN app skeleton to be used with future applications",
+  "main": "app.js",
+  "repository": "https://github.com/JamisonHolt/MERN-Skeleton.git",
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail \"node server/app.js\" \"node client/app.js\"",
+    "build": "webpack --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server/app.js",
+    "client": "nodemon client/app.js --exec babel-node",
+    "db": "mongod --dbpath=./.db",
+    "all": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\" \"npm run db\"",
+    "install-all": "npm install && npm install --only=dev"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "concurrently": "*",
+    "cors": "*",
+    "ejs": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongojs": "*",
+    "passport": "*",
+    "passport-jwt": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router": "*",
+    "react-router-dom": "*",
+    "react-scripts": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-loader": "*",
+    "babel-preset-env": "*",
+    "babel-preset-react": "*",
+    "html-webpack-plugin": "*",
+    "nodemon": "*",
+    "webpack": "*",
+    "webpack-dev-server": "*"
+  },
+  "author": "Jamison Holt",
+  "license": "ISC"
+}
