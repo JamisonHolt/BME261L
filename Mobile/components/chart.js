@@ -1,25 +1,28 @@
 import React from 'react';
 import { StyleSheet, Text, View, Component } from 'react-native';
 import ChartView from 'react-native-highcharts';
+// import BlueTooth from './bluetooth';
+import readTemp from './test';
 
 export default class RawChart extends React.Component {
   render() {
     const Highcharts='Highcharts';
-    const conf={
+    let bt = new BlueTooth();
+    let conf={
       chart: {
         type: 'spline',
         animation: Highcharts.svg, // don't animate in old IE
         marginRight: 10,
         events: {
           load: function () {
-
             // set up the updating of the chart each second
+            let x = 0;
             let series = this.series[0];
-            setInterval(() => {
-              let x = (new Date()).getTime(); // current time
-              let y = Math.random();
+            setInterval(function () {
+              x++; // current time
+              let y = bt.getRecentTemp();
               series.addPoint([x, y], true, true);
-            }, 2000);
+            }, 750);
           }
         }
       },
@@ -31,6 +34,10 @@ export default class RawChart extends React.Component {
         tickPixelInterval: 150
       },
       yAxis: {
+        min: -0.25,
+        max: 1.25,
+        startOnTick: false,
+        endOnTick: false,
         title: {
           text: 'Value'
         },
@@ -55,38 +62,31 @@ export default class RawChart extends React.Component {
       },
       series: [{
         name: 'Random data',
+        animation: true,
         data: (function () {
           // generate an array of random data
-          let data = [],
-          time = (new Date()).getTime(),
-          i;
-
-          for (i = -19; i <= 0; i += 1) {
-            data.push({
-              x: time + i * 1000,
-              y: Math.random()
-            });
+          let data = [];
+          const graphSize = 40;
+          for (let i = 1-graphSize; i <= 0; i += 1) {
+            data.push({x: i, y: 0});
           }
           return data;
         }())
-      }],
-      credits: {
-        enabled: false
-      }
+      }]
     };
 
     const options = {
-      global: {
-        useUTC: false
-      },
-      lang: {
-        decimalPoint: ',',
-        thousandsSep: '.'
-      }
+      // global: {
+      //   useUTC: false
+      // },
+      // lang: {
+      //   decimalPoint: ',',
+      //   thousandsSep: '.'
+      // }
     };
 
     return (
-      <ChartView style={{height:300, width:350}} config={conf} options={options}></ChartView>
+      <ChartView style={{height:300, width:300}} config={conf} />
     );
   }
 }
