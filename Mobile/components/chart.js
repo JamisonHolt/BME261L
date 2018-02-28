@@ -1,13 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Component } from 'react-native';
 import ChartView from 'react-native-highcharts';
-// import BlueTooth from './bluetooth';
-// import readTemp from './test';
 
 export default class RawChart extends React.Component {
   render() {
     const Highcharts='Highcharts';
-    // let bt = new BlueTooth();
     let conf={
       chart: {
         type: 'spline',
@@ -21,7 +18,6 @@ export default class RawChart extends React.Component {
             let series = this.series[0];
             setInterval(function () {
               x++; // current time
-              // let y = bt.getRecentTemp();
               let y = Math.random();
               series.addPoint([x, y], true, true);
             }, 750);

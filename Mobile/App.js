@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import RawChart from './components/chart';
-// import Test from './components/test';
+import TempReader from './components/tempreader';
 
 export default class App extends React.Component {
   render() {
@@ -10,6 +10,7 @@ export default class App extends React.Component {
       <View style={styles.background}>
         <View style={styles.container}>
           <Text style={styles.text}>Header Placeholder</Text>
+          <TempReader style={styles.text} />
         </View>
         <View style={styles.middle}>
           <View style={styles.background}>
