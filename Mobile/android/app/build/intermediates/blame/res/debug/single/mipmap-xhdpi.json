@@ -2,5 +2,9 @@
     {
         "merged": "/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher.png",
         "source": "/home/uncleduders/Github/Test/BME261L/Mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher.png",
+        "source": "/home/uncleduders/Github/BME261L/Mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
     }
 ]
