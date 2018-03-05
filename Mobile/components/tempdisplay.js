@@ -1,19 +1,42 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import RawChart from './chart';
+import BluetoothSerial from 'react-native-bluetooth-serial';
 
 export default class TempDisplay extends React.Component {
   constructor() {
     super();
     this.state = {
-      temp: -1.0
+      temp: -1.0,
+      deviceID: '00:21:13:01:1C:51'
     };
-    setInterval(() => {
-      this.setState(() => {
-        let nextTemp = Math.random();
-        return {temp: nextTemp};
-      });
-    }, 25);
+
+    BluetoothSerial.connect(this.state.deviceID)
+    .then((res) => {
+      console.log('Connected to device');
+      setInterval(() => {
+        BluetoothSerial.readFromDevice()
+        .then((res) => {
+          console.log(res);
+          if (res) {
+            this.setState(() => {
+              // let nextTemp = parseInt(toString(res));
+              let nextTemp = parseInt(res);
+              return {temp: nextTemp};
+            });
+          }
+        })
+        .catch((err) => {
+          console.log("DICKCSLDFWS");
+        });
+      }, 250);
+      // Toast.showShortBottom(`Connected to device ${device.name}`)
+      // this.setState({ device, connected: true, connecting: false })
+    })
+    .catch((err) => {
+      console.log('Issue connecting to device');
+      // Toast.showShortBottom(err.message)
+    });
   }
 
   render() {

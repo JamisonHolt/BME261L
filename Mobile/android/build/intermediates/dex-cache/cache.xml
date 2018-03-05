@@ -30,12 +30,57 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="48c7f54c2515a2312d3a4481d10c43fbb807f3af">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-1.3.0_80a96b48f189a881cd5b20057f758e31cddce735.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.52.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="af61eb11ffb4296cab0c93218248a3dfcec0a84c">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.react-react-native-0.52.0_6325c5505b7a5751a4bbe0601f361337e7c2939c.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/uncleduders/.gradle/caches/modules-2/files-2.1/com.jakewharton.rxrelay/rxrelay/1.2.0/a53b8b8ef1a5ec8ff75afca24fc689b71892b44f/rxrelay-1.2.0.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="a53b8b8ef1a5ec8ff75afca24fc689b71892b44f">
         <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/rxrelay-1.2.0_294c26c6805fee1d6c9a73757ae8615995d91a2a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_1991a3d4dd7d1d3d44748c3a3b255ba5536a4d14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="fe85b87215e405f5917d40ae4960488ac9224b74">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fresco-1.3.0_b4ce54d4f88f12284c655a92554a0ffca91ba117.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/.gradle/caches/modules-2/files-2.1/com.google.dagger/dagger/2.8/55a1aa1cdcfd06b9950ca856e2bc2790e105146a/dagger-2.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="55a1aa1cdcfd06b9950ca856e2bc2790e105146a">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/dagger-2.8_8ff1ed485be0beed938db6e01592c4faf4706b1b.jar" />
     </item>
     <item
         is-multidex="false"
@@ -54,6 +99,24 @@
         revision="23.0.1"
         sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
         <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/okhttp-3.6.0_165abb9469c19f74cca6408d2b7bb86c98b9a4f9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.52.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="af61eb11ffb4296cab0c93218248a3dfcec0a84c">
+        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.react-react-native-0.52.0_dfd2cf6280f21353f9aab1a5a3bc3ee4b4ba34eb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/Mobile/react-native-bluetooth-serial/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="7529e53083ceee0e00d121ed7f54ed040e7768f9">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/Mobile-react-native-bluetooth-serial-unspecified_346c463378385322a17a7fed0edf2ce567e248ab.jar" />
     </item>
     <item
         is-multidex="false"
@@ -93,6 +156,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/uncleduders/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1_c8f93d7f60491442aa82edba7bd59a06dc5a5882.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/1.3.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -108,6 +180,15 @@
         revision="23.0.1"
         sha1="8f615bca00639150c9eb6175d4b5471193f70794">
         <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.soloader-soloader-0.1.0_dc218f61d95db6cb4ddb064b3e40be49c2e2bba0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c65a2e39d54023bac3aef64a2f0cff89289c7ff6">
+        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-1.3.0_137516b6f05f283961c3bd3279b49d918ee869df.jar" />
     </item>
     <item
         is-multidex="false"
@@ -129,6 +210,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_d1f28d7af17521481329af94adc24522256e6587.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp3/1.3.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -144,159 +234,6 @@
         revision="23.0.1"
         sha1="d9d192da2f2fb8614de9fbbd728950be6637b8da">
         <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/Mobile-react-native-svg-unspecified_a3d5d9270ef3c5a07b7bab20a68298950419aec8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.3.2/bcc561a84883a9f3f84e209662c4765a0c3dc691/rxjava-1.3.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="bcc561a84883a9f3f84e209662c4765a0c3dc691">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/rxjava-1.3.2_0ef7a8ef6902c03025d731934e4dc8e8b18a620d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_b5423b5d4fb429e8736a0b691a67f63cdda9130d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="6975da39a7040257bd51d21a231b76c915872d38">
-        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/javax.inject-1_0ff74dbebddd940ef9482b671e70881966d9b6f6.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_92245a76225132c0fee39e7e2c5423e34121fefb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.0.1_b69eb73111cb1174f05bdd80f17b2e01f5a991e7.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.polidea.rxandroidble/rxandroidble/1.4.3/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="86d0e4fc4a4ee9e31b6d54ae3a14afe682815f08">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.polidea.rxandroidble-rxandroidble-1.4.3_d7abc00527e33df68b9907b6fef448f6f9b6ecd5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="37345de2ed2772f385eaeec37a9c2ff0fea99ad7">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fbcore-1.3.0_93b394b74dbdddf92767c1e693dcb0211e4590f4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="fe85b87215e405f5917d40ae4960488ac9224b74">
-        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fresco-1.3.0_526223f15b79860b9520ed4e36f3f8b9b01714b4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="48c7f54c2515a2312d3a4481d10c43fbb807f3af">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-1.3.0_80a96b48f189a881cd5b20057f758e31cddce735.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.52.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="af61eb11ffb4296cab0c93218248a3dfcec0a84c">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.react-react-native-0.52.0_6325c5505b7a5751a4bbe0601f361337e7c2939c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_1991a3d4dd7d1d3d44748c3a3b255ba5536a4d14.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="fe85b87215e405f5917d40ae4960488ac9224b74">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fresco-1.3.0_b4ce54d4f88f12284c655a92554a0ffca91ba117.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/.gradle/caches/modules-2/files-2.1/com.google.dagger/dagger/2.8/55a1aa1cdcfd06b9950ca856e2bc2790e105146a/dagger-2.8.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="55a1aa1cdcfd06b9950ca856e2bc2790e105146a">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/dagger-2.8_8ff1ed485be0beed938db6e01592c4faf4706b1b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.52.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="af61eb11ffb4296cab0c93218248a3dfcec0a84c">
-        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.react-react-native-0.52.0_dfd2cf6280f21353f9aab1a5a3bc3ee4b4ba34eb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1_c8f93d7f60491442aa82edba7bd59a06dc5a5882.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="c65a2e39d54023bac3aef64a2f0cff89289c7ff6">
-        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-1.3.0_137516b6f05f283961c3bd3279b49d918ee869df.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_d1f28d7af17521481329af94adc24522256e6587.jar" />
     </item>
     <item
         is-multidex="false"
@@ -363,12 +300,39 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/uncleduders/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.3.2/bcc561a84883a9f3f84e209662c4765a0c3dc691/rxjava-1.3.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="bcc561a84883a9f3f84e209662c4765a0c3dc691">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/rxjava-1.3.2_0ef7a8ef6902c03025d731934e4dc8e8b18a620d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_b5423b5d4fb429e8736a0b691a67f63cdda9130d.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/1.3.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="c65a2e39d54023bac3aef64a2f0cff89289c7ff6">
         <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-1.3.0_8992aa1d7443c8c5442bb1943d73547f6ebe293d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/javax.inject-1_0ff74dbebddd940ef9482b671e70881966d9b6f6.jar" />
     </item>
     <item
         is-multidex="false"
@@ -387,6 +351,51 @@
         revision="23.0.1"
         sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
         <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0_6bb35cf0e5bd1fc90b401852eb8cd333f6c73184.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_92245a76225132c0fee39e7e2c5423e34121fefb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.0.1_b69eb73111cb1174f05bdd80f17b2e01f5a991e7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.polidea.rxandroidble/rxandroidble/1.4.3/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="86d0e4fc4a4ee9e31b6d54ae3a14afe682815f08">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.polidea.rxandroidble-rxandroidble-1.4.3_d7abc00527e33df68b9907b6fef448f6f9b6ecd5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="37345de2ed2772f385eaeec37a9c2ff0fea99ad7">
+        <dex dex="/home/uncleduders/Github/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fbcore-1.3.0_93b394b74dbdddf92767c1e693dcb0211e4590f4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="fe85b87215e405f5917d40ae4960488ac9224b74">
+        <dex dex="/home/uncleduders/Github/Test/BME261L/Mobile/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fresco-1.3.0_526223f15b79860b9520ed4e36f3f8b9b01714b4.jar" />
     </item>
 
 </items>
