@@ -10,32 +10,66 @@ export default class TempDisplay extends React.Component {
       temp: -1.0,
       deviceID: '00:21:13:01:1C:51'
     };
-
+     // this number should preferably be divisible by 7
+    this.maxBufferSize = 14;
+    this.serialDataLength = 7;
+    // Connect to the specified device
     BluetoothSerial.connect(this.state.deviceID)
     .then((res) => {
       console.log('Connected to device');
-      setInterval(() => {
-        BluetoothSerial.readFromDevice()
-        .then((res) => {
-          console.log(res);
-          if (res) {
-            this.setState(() => {
-              // let nextTemp = parseInt(toString(res));
-              let nextTemp = parseInt(res);
-              return {temp: nextTemp};
-            });
-          }
-        })
-        .catch((err) => {
-          console.log("DICKCSLDFWS");
-        });
-      }, 250);
-      // Toast.showShortBottom(`Connected to device ${device.name}`)
-      // this.setState({ device, connected: true, connecting: false })
+      // Make sure our serial is empty in case of device change
+      BluetoothSerial.clear();
+      this.beginReading();
     })
     .catch((err) => {
       console.log('Issue connecting to device');
-      // Toast.showShortBottom(err.message)
+    });
+  }
+
+  beginReading() {
+    setInterval(() => {
+      // Only read in temperature if value available in buffer
+      BluetoothSerial.available()
+      .then((numAvailable) => {
+        if (numAvailable >= 7) {
+          this.readTemp();
+        }
+      })
+      .catch((err) => {
+        console.log("Error getting available serial reads");
+      });
+    }, 300);
+  }
+
+  readTemp() {
+    BluetoothSerial.readUntilDelimiter("\r\n")
+    .then((tempString) => {
+      // Make sure any "shredded" serial values are filtered out
+      if (tempString.length === this.serialDataLength) {
+        this.setState(() => {
+          // Add temperature to state for display
+          let tempFloat = parseFloat(tempString);
+          return {temp: tempFloat};
+        });
+      }
+      // Automatically clean buffer in case of too many values
+      this.clearBuffer();
+    })
+    .catch((err) => {
+      console.log("Error reading temp");
+    });
+  }
+
+  clearBuffer() {
+    // Make sure to only clear buffer if too many values
+    BluetoothSerial.available()
+    .then((numAvailable) => {
+      if (numAvailable > this.maxBufferSize) {
+        BluetoothSerial.clear();
+      }
+    })
+    .catch((err) => {
+      console.log("Error clearing serial buffer");
     });
   }
 
