@@ -1,7 +1,7 @@
 #include "application.h"
 #include "Adafruit/src/MCP9808.h"
 // Allow offline development by preventing blocking io from WiFi module
-SYSTEM_MODE(SEMI_AUTOMATIC);
+SYSTEM_MODE(MANUAL);
 // Create the MCP9808 temperature sensor object
 MCP9808 tempSensor = MCP9808();
 // Constants
@@ -36,5 +36,5 @@ void loop() {
   fahrenheit = tempSensor.getTemperature() * 9.0 / 5.0 + 32;
   Serial.println(fahrenheit);
   Serial1.println(fahrenheit);
-	delay(250);
+  delay(250);
 }
