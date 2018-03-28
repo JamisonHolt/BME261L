@@ -11,7 +11,13 @@ export default class App extends React.Component {
         <View style={styles.container}>
           <Text style={styles.text}>Header Placeholder</Text>
         </View>
-        <TempDisplay style={styles.text} />
+        <TempDisplay
+          containerStyle={styles.middle}
+          tempStyle={styles.text}
+          chartStyle={styles.chart}
+          chartMin={ 80 }
+          chartMax={ 110 }
+        />
         <View style={styles.container}>
           <Text style={styles.text}>Footer Placeholder</Text>
         </View>
@@ -41,6 +47,12 @@ const styles = StyleSheet.create({
     marginTop: 50,
     flex: 1,
     color: '#BF5700'
+  },
+  chart: {
+    flex: 10,
+    flexDirection: 'row',
+    marginLeft: 10,
+    marginRight: 10
   }
 });
 //
