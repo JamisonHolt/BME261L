@@ -1,8 +1,7 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
-import RawChart from './components/chart';
-import TempDisplay from './components/tempdisplay';
+import TempDisplay from './components/tempdisplay'
 
 export default class App extends React.Component {
   render() {
