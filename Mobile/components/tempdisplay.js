@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import RawChart from './chart';
 import BluetoothSerial from 'react-native-bluetooth-serial';
 
@@ -9,6 +9,7 @@ export default class TempDisplay extends React.Component {
     this.state = {
       temp: this.props.chartMin,
       time: new Date().toLocaleString(),
+      celsius: false,
       deviceID: '00:21:13:01:1C:51'
     };
     const MAX_NUM_BUFFER_ITEMS = 5;
@@ -86,10 +87,11 @@ export default class TempDisplay extends React.Component {
 
   render() {
     let currTemp = this.state.temp;
+    const letter = this.state.celsius ? '°C' : '°F';
     return (
-      <View style={ this.props.containerStyle }>
-        <Text style={ this.props.tempStyle }>{currTemp.toString()}</Text>
-        <RawChart style={ this.props.chartStyle }
+      <View style={ styles.tempDisplay }>
+        <Text style={ styles.tempText }>{currTemp.toString() + letter}</Text>
+        <RawChart style={ styles.chartStyle }
           temp={ currTemp }
           min = { this.props.chartMin }
           max = { this.props.chartMax }
@@ -102,3 +104,24 @@ export default class TempDisplay extends React.Component {
     return this.state.data[this.state.ptr];
   }
 }
+
+const styles = StyleSheet.create({
+  tempDisplay: {
+    flex: 10,
+    flexDirection: 'column',
+    backgroundColor: '#333F48',
+    alignItems: 'center'
+  },
+  tempText: {
+    flex: 9,
+    color: '#BF5700',
+    fontSize: 160,
+
+  },
+  chartStyle: {
+    flex: 20,
+    paddingLeft: 20,
+    marginBottom: -200,
+    marginTop: -100
+  }
+});
