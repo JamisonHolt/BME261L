@@ -9,7 +9,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.background}>
         <View style={styles.container}>
-          <Text style={styles.text}>Header Placeholder</Text>
+          <Text style={styles.text}>BLARGH</Text>
         </View>
         <TempDisplay
           containerStyle={styles.middle}

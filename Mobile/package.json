@@ -28,10 +28,10 @@
   "dependencies": {
     "eslint": "^4.19.1",
     "expo": "^25.0.0",
-    "native-highcharts-wrapper": "^1.0.1",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-bluetooth-serial": "*",
+    "react-native-svg": "^6.3.1",
     "react-native-svg-charts": "^3.0.2"
   }
 }
