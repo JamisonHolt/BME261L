@@ -7,7 +7,8 @@ export default class TempDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      temp: this.props.chartMin,
+      isPortrait: this.props.isPortrait,
+      temp: 80,
       time: new Date().toLocaleString(),
       celsius: false,
       deviceID: '00:21:13:01:1C:51'
@@ -34,12 +35,17 @@ export default class TempDisplay extends React.Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isPortrait !== nextProps.isPortrait) {
+      this.setState({ isPortrait: nextProps.isPortrait });
+    }
+  }
+
   beginReading() {
     setInterval(() => {
       // Only read in temperature if value available in buffer
       BluetoothSerial.available()
       .then((numAvailable) => {
-        console.log("numAvailable: " + numAvailable);
         if (numAvailable >= 7) {
           this.readTemp();
         }
@@ -88,13 +94,15 @@ export default class TempDisplay extends React.Component {
   render() {
     let currTemp = this.state.temp;
     const letter = this.state.celsius ? '°C' : '°F';
+    const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
     return (
-      <View style={ styles.tempDisplay }>
+      <View style={ this.props.style }>
         <Text style={ styles.tempText }>{currTemp.toString() + letter}</Text>
         <RawChart style={ styles.chartStyle }
           temp={ currTemp }
-          min = { this.props.chartMin }
-          max = { this.props.chartMax }
+          isCelsius = { this.state.isCelsius }
+          min = { 80 }
+          max = { 120 }
         />
       </View>
     );
@@ -105,17 +113,11 @@ export default class TempDisplay extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  tempDisplay: {
-    flex: 10,
-    flexDirection: 'column',
-    backgroundColor: '#333F48',
-    alignItems: 'center'
-  },
+const portraitStyles = StyleSheet.create({
   tempText: {
     flex: 9,
     color: '#BF5700',
-    fontSize: 160,
+    fontSize: 130,
 
   },
   chartStyle: {
@@ -123,5 +125,20 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginBottom: -200,
     marginTop: -100
+  }
+});
+
+const landscapeStyles = StyleSheet.create({
+  tempText: {
+    flex: 9,
+    flexDirection: 'row',
+    color: '#BF5700',
+    fontSize: 80
+  },
+  chartStyle: {
+    flex: 10,
+    flexDirection: 'row',
+    padding: 100,
+    marginTop: -200,
   }
 });
