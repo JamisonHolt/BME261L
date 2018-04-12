@@ -29,7 +29,13 @@ export default class RawChart extends React.Component {
   render() {
     return (
       <View style={ this.props.style }>
-
+        <VictoryLine
+          style={{
+            data: { stroke: "#c43a31" },
+            parent: { border: "1px solid #ccc" }
+          }}
+          data={this.state.temp}
+        />
       </View>
     )
   }
