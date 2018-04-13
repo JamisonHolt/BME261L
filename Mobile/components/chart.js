@@ -6,7 +6,7 @@ export default class RawChart extends React.Component {
   constructor(props) {
     super(props);
     // TODO: update dataSize to be much larger
-    const dataSize = 50;
+    const dataSize = 400;
     let initialData = [];
     let currDate = new Date();
     currDate.setHours(currDate.getHours(), currDate.getMinutes() - dataSize);
@@ -17,15 +17,14 @@ export default class RawChart extends React.Component {
         0,
         0
       );
-      console.log(currDate.toLocaleTimeString().substring(0, 5));
       initialData.push({
-        x: currDate,
-        y: 80 + i / 3
+        x: new Date(currDate),
+        y: 90 + i % 10
       });
     }
     this.state = {
       temp: initialData,
-      isCelsius: false
+      isCelsius: this.props.isCelsius
     };
   }
 
@@ -36,14 +35,31 @@ export default class RawChart extends React.Component {
       nextTemp.push(nextProps.temp);
       this.setState({temp: nextTemp});
     }
+    if (this.props.isCelsius !== nextProps.isCelsius) {
+      this.setState({isCelsius: nextProps.isCelsius});
+    }
   }
 
   render() {
+    const transform = num => {
+      if (this.state.isCelsius) {
+        return (num - 32) * 5 / 9;
+      }
+      return num;
+    }
     return (
       <View style={ this.props.style }>
         <VictoryChart style={{ flex: 1}} scale={{ x: "time" }} >
           <VictoryLine
-            data={this.state.temp}
+            data={(() => {
+              // Convert fahrenheit to celsius if necessary
+              if (! this.state.isCelsius) {return this.state.temp;}
+              let data = this.state.temp.slice();
+              for (let i = 0; i < this.state.temp.length; i++) {
+                data[i]["y"] = transform(data[i]["y"]);
+              }
+              return data
+            })()}
             scale={{ x: "time" }}
             style={{
               flex: 1,
@@ -52,8 +68,8 @@ export default class RawChart extends React.Component {
           />
           <VictoryAxis
             label="Time"
-            tickFormat={x => x}
-            tickCount={1}
+            tickFormat={x => x.toString().substring(16, 24)}
+            tickCount={3}
             style={{
               flex: 1,
               axis: { stroke: '#FFF' },
@@ -67,7 +83,7 @@ export default class RawChart extends React.Component {
             label="Temperature"
             tickFormat={y => y}
             tickCount={10}
-            domain={[80, 110]}
+            domain={[transform(80), transform(110)]}
             style={{
               flex: 20,
               axis: { stroke: '#FFF'},

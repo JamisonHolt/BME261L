@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Vibration } from 'react-native';
 import RawChart from './chart';
 import BluetoothSerial from 'react-native-bluetooth-serial';
+
+const CRITICAL_TEMP = 105;
 
 export default class TempDisplay extends React.Component {
   constructor(props) {
@@ -9,8 +11,7 @@ export default class TempDisplay extends React.Component {
     this.state = {
       isPortrait: this.props.isPortrait,
       temp: 80,
-      time: new Date().toLocaleString(),
-      celsius: false,
+      isCelsius: false,
       deviceID: '00:21:13:01:1C:51'
     };
     const MAX_NUM_BUFFER_ITEMS = 5;
@@ -18,9 +19,6 @@ export default class TempDisplay extends React.Component {
     this.maxBufferSize = MAX_NUM_BUFFER_ITEMS * this.serialDataLength;
   }
 
-  /**
-   *
-   */
   componentWillMount() {
     // Connect to the specified device
     BluetoothSerial.connect(this.state.deviceID)
@@ -61,14 +59,18 @@ export default class TempDisplay extends React.Component {
     .then((tempString) => {
       // Make sure any "shredded" serial values are filtered out
       if (tempString.length === this.serialDataLength) {
+        const tempFloat = parseFloat(tempString);
         this.setState(() => {
           // Add temperature to state for display
-          let tempFloat = parseFloat(tempString);
           return {
             temp: tempFloat,
-            time: new Date().toLocaleString()
           };
+          
         });
+        // TODO: Make sure this works properly
+        if (tempFloat > CRITICAL_TEMP) {
+          Vibration.vibrate(10000);
+        }
       }
       // Automatically clean buffer in case of too many values
       this.clearBuffer();
@@ -92,8 +94,9 @@ export default class TempDisplay extends React.Component {
   }
 
   render() {
-    let currTemp = this.state.temp;
-    const letter = this.state.celsius ? '°C' : '°F';
+    let currTemp = this.state.isCelsius ? (this.state.temp - 32) * 5 / 9 : this.state.temp;
+    currTemp = parseInt(currTemp);
+    const letter = this.state.isCelsius ? '°C' : '°F';
     const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
     return (
       <View style={ this.props.style }>
@@ -101,8 +104,6 @@ export default class TempDisplay extends React.Component {
         <RawChart style={ styles.chartStyle }
           temp={ currTemp }
           isCelsius = { this.state.isCelsius }
-          min = { 80 }
-          max = { 120 }
         />
       </View>
     );

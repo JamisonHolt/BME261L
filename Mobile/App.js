@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Text, View } from 'react-native';
+import { StyleSheet, Dimensions, Text, View, Button } from 'react-native';
 
 import TempDisplay from './components/tempdisplay';
 
@@ -8,6 +8,7 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      isCelsius: false,
       isPortrait: this.updateIsPortrait()
     }
 
@@ -27,7 +28,14 @@ export default class App extends React.Component {
     const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
     return (
       <View style={styles.background}>
-        <Text style={styles.text}>BLARGH</Text>
+        <Button
+          title="Button"
+          style={styles.button}
+          onPress={() => {this.setState({
+            isCelsius: !(this.state.isCelsius)
+          });
+        }}
+        />
         <TempDisplay
           style={styles.tempDisplay}
           isPortrait={ this.state.isPortrait }
@@ -44,7 +52,8 @@ const portraitStyles = StyleSheet.create({
     backgroundColor: '#333F48',
     justifyContent: 'center'
   },
-  text: {
+  button: {
+    marginTop: 40,
     flex: 3,
     color: '#BF5700'
   },
@@ -61,7 +70,8 @@ const landscapeStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#333F48',
   },
-  text: {
+  button: {
+    marginTop: 40,
     flex: 1,
     color: '#BF5700',
     flexDirection: 'row'
