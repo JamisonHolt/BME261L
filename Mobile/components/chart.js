@@ -68,7 +68,7 @@ export default class RawChart extends React.Component {
           />
           <VictoryAxis
             label="Time"
-            tickFormat={x => x.toString().substring(16, 24)}
+            tickFormat={x => x.toString().substring(16, 21)}
             tickCount={3}
             style={{
               flex: 1,

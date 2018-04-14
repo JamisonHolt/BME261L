@@ -95,12 +95,11 @@ export default class TempDisplay extends React.Component {
 
   render() {
     let currTemp = this.state.isCelsius ? (this.state.temp - 32) * 5 / 9 : this.state.temp;
-    currTemp = parseInt(currTemp);
     const letter = this.state.isCelsius ? '°C' : '°F';
     const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
     return (
       <View style={ this.props.style }>
-        <Text style={ styles.tempText }>{currTemp.toString() + letter}</Text>
+        <Text style={ styles.tempText }>{currTemp.toFixed(1) + letter}</Text>
         <RawChart style={ styles.chartStyle }
           temp={ currTemp }
           isCelsius = { this.state.isCelsius }
@@ -118,14 +117,15 @@ const portraitStyles = StyleSheet.create({
   tempText: {
     flex: 9,
     color: '#BF5700',
-    fontSize: 130,
+    fontSize: 100,
+    marginTop: 50
 
   },
   chartStyle: {
     flex: 20,
     paddingLeft: 20,
     marginBottom: -200,
-    marginTop: -100
+    marginTop: -125
   }
 });
 

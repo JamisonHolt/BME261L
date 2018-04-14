@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Text, View, Button, Picker } from 'react-native';
+import { StyleSheet, Dimensions, View, Text, ToolbarAndroid} from 'react-native';
 
 import TempDisplay from './components/tempdisplay';
 
@@ -33,36 +33,20 @@ export default class App extends React.Component {
           style={styles.tempDisplay}
           isPortrait={ this.state.isPortrait }
         />
-        <View style={styles.button} >
-          <Button
-            title="Change to Celsius"
-            color="#BF5700"
-            style={styles.button}
-            onPress={() => {
-              this.setState({
-                isCelsius: !(this.state.isCelsius)
-              });
-            }}
-          />
-          <View style={styles.bluetooth} >
-            <View style={styles.blueToothDropdown} >
-              <Picker 
-                selectedValue={this.state.selectedDevice}
-                style={{ backgroundColor: "#BF5700"}}
-                itemStyle={{ color: '#BF5700'}}
-                onValueChange={(itemValue, itemIndex) => this.setState({selectedDevice: itemValue})}
-                >
-                <Picker.Item label='Select a device' value={null} />                
-                <Picker.Item label='00:21:13:01:1C:51' value='00:21:13:01:1C:51' />
-              </Picker>
-            </View>
-            <View style={styles.blueToothButton} >
-              <Button
-                title="Connect"
-                color="#BF5700"           
-                onPress={() => {}}   
-              />
-            </View>
+        <View style={styles.toolbarContainer}>
+          <ToolbarAndroid
+            style={styles.toolbar}
+            actions={[
+              { title: 'Connect', icon: require('./icons/bluetooth.png'), show: 'always' },
+              { title: 'Play', icon: require('./icons/play.png' ), show: 'always' },
+              { title: 'Delete', icon: require('./icons/delete.png'), show: 'always' }
+            ]}
+          >
+          </ToolbarAndroid>
+          <View style={styles.iconTextContainer}>
+            <Text style={styles.iconText}>Connect</Text>
+            <Text style={styles.iconText}>Record</Text>
+            <Text style={styles.iconText}>Delete</Text>          
           </View>
         </View>
       </View>
@@ -77,28 +61,28 @@ const portraitStyles = StyleSheet.create({
     backgroundColor: '#333F48',
     justifyContent: 'center'
   },
-  bluetooth: {
-    flex: 1,
+  toolbarContainer: {
+    backgroundColor: '#BF5700'
+  },
+  toolbar: {
+    backgroundColor: '#BF5700',
+    height: 56,
+    alignSelf: 'stretch',
+  },
+  iconTextContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'space-between'
   },
-  blueToothDropdown: {
-    flex: 2,
-    marginRight: 5
-  },
-  blueToothButton: {
-    flex: 1,
-  },
-  button: {
-    margin: 20,
-    marginBottom: 0,
-    flex: 3,
+  iconText: {
+    color: 'white',
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: -10,
+    fontSize: 10
   },
   tempDisplay: {
     flex: 10,
     flexDirection: 'column',
-    backgroundColor: '#333F48',
     alignItems: 'center'
   },
 });
