@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, View, Text, ToolbarAndroid} from 'react-native';
+import { StyleSheet, Dimensions, View, Text, TouchableHighlight, Image} from 'react-native';
 
 import TempDisplay from './components/tempdisplay';
 
@@ -10,7 +10,8 @@ export default class App extends React.Component {
     this.state = {
       isCelsius: false,
       isPortrait: this.updateIsPortrait(),
-      selectedDevice: 'Select a device'
+      selectedDevice: 'Select a device',
+      isRecording: false
     }
 
     Dimensions.addEventListener('change', () => {
@@ -18,11 +19,41 @@ export default class App extends React.Component {
         isPortrait: this.updateIsPortrait()
       });
     });
+    // TODO: Find and store bluetooth devices that have been paired
   }
 
   updateIsPortrait() {
     const dim = Dimensions.get('screen');
     return dim.width < dim.height;
+  }
+
+  getStopPlayButton(styles) {
+    let button = null;
+    if (this.state.isRecording) {
+      return (
+        <View style={styles.iconContainer}>
+          <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
+            <Image
+              style={styles.icon}
+              source={require('./icons/stop.png')}
+            />
+          </TouchableHighlight>
+          <Text style={styles.iconText}>Stop</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.iconContainer}>
+          <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
+            <Image
+              style={styles.icon}
+              source={require('./icons/record.png')}
+            />
+          </TouchableHighlight>
+          <Text style={styles.iconText}>Record</Text>
+        </View>
+      )
+    }
   }
 
   render() {
@@ -34,19 +65,25 @@ export default class App extends React.Component {
           isPortrait={ this.state.isPortrait }
         />
         <View style={styles.toolbarContainer}>
-          <ToolbarAndroid
-            style={styles.toolbar}
-            actions={[
-              { title: 'Connect', icon: require('./icons/bluetooth.png'), show: 'always' },
-              { title: 'Play', icon: require('./icons/play.png' ), show: 'always' },
-              { title: 'Delete', icon: require('./icons/delete.png'), show: 'always' }
-            ]}
-          >
-          </ToolbarAndroid>
-          <View style={styles.iconTextContainer}>
+          <View style={styles.iconContainer}>
+            <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
+              <Image
+                style={styles.icon}
+                source={require('./icons/bluetooth.png')}
+              />
+            </TouchableHighlight>
             <Text style={styles.iconText}>Connect</Text>
-            <Text style={styles.iconText}>Record</Text>
-            <Text style={styles.iconText}>Delete</Text>          
+          </View>
+          {this.getStopPlayButton(styles)}
+          {/* TODO: Start recording when pressed */}          
+          <View style={styles.iconContainer}>
+            <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
+              <Image
+                style={styles.icon}
+                source={require('./icons/clear.png')}
+              />
+            </TouchableHighlight>
+            <Text style={styles.iconText}>Clear</Text>
           </View>
         </View>
       </View>
@@ -62,23 +99,28 @@ const portraitStyles = StyleSheet.create({
     justifyContent: 'center'
   },
   toolbarContainer: {
-    backgroundColor: '#BF5700'
-  },
-  toolbar: {
     backgroundColor: '#BF5700',
-    height: 56,
-    alignSelf: 'stretch',
-  },
-  iconTextContainer: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    alignItems: 'center',
+  },
+  iconContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  touchableHighlight: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 10
+  },
+  icon: {
+    height: 30,
+    width: 30,
   },
   iconText: {
-    color: 'white',
     marginLeft: 30,
     marginRight: 30,
-    marginTop: -10,
-    fontSize: 10
+    fontSize: 10,
   },
   tempDisplay: {
     flex: 10,
