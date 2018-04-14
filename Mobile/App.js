@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View, Text, TouchableHighlight, Image} from 'react-native';
+import BluetoothSerial from 'react-native-bluetooth-serial';
 
 import TempDisplay from './components/tempdisplay';
 
@@ -11,15 +12,25 @@ export default class App extends React.Component {
       isCelsius: false,
       isPortrait: this.updateIsPortrait(),
       selectedDevice: 'Select a device',
-      isRecording: false
+      isRecording: false,
+      devices: []
     }
+
+    // Find and store bluetooth devices that have been paired
+    BluetoothSerial.list()
+    .then((res) => {
+      this.setState({
+        devices: res
+      });
+    }).catch((err) => {
+      console.log("Issue Listing Paired devices");
+    });
 
     Dimensions.addEventListener('change', () => {
       this.setState({
         isPortrait: this.updateIsPortrait()
       });
     });
-    // TODO: Find and store bluetooth devices that have been paired
   }
 
   updateIsPortrait() {
@@ -64,18 +75,18 @@ export default class App extends React.Component {
           style={styles.tempDisplay}
           isPortrait={ this.state.isPortrait }
         />
+        {/* TODO: Add all icon actions */}
         <View style={styles.toolbarContainer}>
           <View style={styles.iconContainer}>
-            <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
+            <TouchableHighlight underlayColor='#b35000' onPress={() => {}} style={styles.touchableHighlight}>
               <Image
                 style={styles.icon}
                 source={require('./icons/bluetooth.png')}
               />
             </TouchableHighlight>
-            <Text style={styles.iconText}>Connect</Text>
+            <Text style={styles.iconText}>Device</Text>
           </View>
           {this.getStopPlayButton(styles)}
-          {/* TODO: Start recording when pressed */}          
           <View style={styles.iconContainer}>
             <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
               <Image
@@ -84,6 +95,15 @@ export default class App extends React.Component {
               />
             </TouchableHighlight>
             <Text style={styles.iconText}>Clear</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
+              <Image
+                style={styles.icon}
+                source={require('./icons/thermometer.png')}
+              />
+            </TouchableHighlight>
+            <Text style={styles.iconText}>To °{this.isCelsius ? 'F' : 'C'}</Text>
           </View>
         </View>
       </View>
@@ -111,7 +131,7 @@ const portraitStyles = StyleSheet.create({
   touchableHighlight: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 10
+    marginTop: 7
   },
   icon: {
     height: 30,
@@ -120,7 +140,9 @@ const portraitStyles = StyleSheet.create({
   iconText: {
     marginLeft: 30,
     marginRight: 30,
-    fontSize: 10,
+    fontSize: 9,
+    color: 'white',
+    marginBottom: 2
   },
   tempDisplay: {
     flex: 10,
