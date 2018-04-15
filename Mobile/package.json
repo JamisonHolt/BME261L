@@ -31,6 +31,7 @@
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-bluetooth-serial": "*",
+    "react-native-drawer": "^2.5.0",
     "react-native-svg": "^6.3.1",
     "react-native-svg-charts": "^3.0.2",
     "victory-native": "^0.17.4"

@@ -72,9 +72,9 @@ export default class RawChart extends React.Component {
             tickCount={3}
             style={{
               flex: 1,
-              axis: { stroke: '#FFF' },
-              axisLabel: { fontSize: 17, padding: 25, stroke: '#BF5700', fill: '#BF5700' },
-              ticks: { stroke: '#FFF', size: 5 },
+              axis: { stroke: 'white' },
+              axisLabel: { fontSize: 17, padding: 30, stroke: '#BF5700', fill: '#BF5700' },
+              ticks: { stroke: 'white', size: 5 },
               tickLabels: { fontSize: 12, padding: 3.5, stroke: '#BF5700' }
             }}
 
@@ -86,9 +86,9 @@ export default class RawChart extends React.Component {
             domain={[transform(80), transform(110)]}
             style={{
               flex: 20,
-              axis: { stroke: '#FFF'},
+              axis: { stroke: 'white'},
               axisLabel: { fontSize: 17, padding: 35, stroke: '#BF5700', fill: '#BF5700' },
-              ticks: { stroke: '#FFF', size: 5},
+              ticks: { stroke: 'white', size: 5},
               tickLabels: { fontSize: 12, padding: 3.5, stroke: '#BF5700'}
             }}
           />

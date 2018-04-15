@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View, Text, TouchableHighlight, Image} from 'react-native';
 import BluetoothSerial from 'react-native-bluetooth-serial';
+import Drawer from 'react-native-drawer';
 
+import ControlPanel from './components/control-panel.js';
 import TempDisplay from './components/tempdisplay';
 
 
@@ -11,8 +13,9 @@ export default class App extends React.Component {
     this.state = {
       isCelsius: false,
       isPortrait: this.updateIsPortrait(),
-      selectedDevice: 'Select a device',
       isRecording: false,
+      displayDevices: false,
+      selectedDevice: null,
       devices: []
     }
 
@@ -22,6 +25,7 @@ export default class App extends React.Component {
       this.setState({
         devices: res
       });
+      console.log(res);
     }).catch((err) => {
       console.log("Issue Listing Paired devices");
     });
@@ -38,7 +42,8 @@ export default class App extends React.Component {
     return dim.width < dim.height;
   }
 
-  getStopPlayButton(styles) {
+  getStopPlayButton() {
+    const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;    
     let button = null;
     if (this.state.isRecording) {
       return (
@@ -67,10 +72,27 @@ export default class App extends React.Component {
     }
   }
 
+  renderDeviceMenu() {
+    const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
+    return (
+      <Drawer
+        type="static"
+        content={<ControlPanel />}
+        openDrawerOffset={100}
+        styles={drawerStyles}
+        tweenHandler={Drawer.tweenPresets.parallax}
+      >
+        <Text>Test</Text>
+      </Drawer>
+    );
+  }
   render() {
     const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
     return (
       <View style={styles.background}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>ThermActive</Text>
+        </View>
         <TempDisplay
           style={styles.tempDisplay}
           isPortrait={ this.state.isPortrait }
@@ -78,7 +100,7 @@ export default class App extends React.Component {
         {/* TODO: Add all icon actions */}
         <View style={styles.toolbarContainer}>
           <View style={styles.iconContainer}>
-            <TouchableHighlight underlayColor='#b35000' onPress={() => {}} style={styles.touchableHighlight}>
+            <TouchableHighlight underlayColor='#b35000' onPress={() => this.setState({displayDevices: !this.state.displayDevices})} style={styles.touchableHighlight}>
               <Image
                 style={styles.icon}
                 source={require('./icons/bluetooth.png')}
@@ -86,7 +108,7 @@ export default class App extends React.Component {
             </TouchableHighlight>
             <Text style={styles.iconText}>Device</Text>
           </View>
-          {this.getStopPlayButton(styles)}
+          {this.getStopPlayButton()}
           <View style={styles.iconContainer}>
             <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
               <Image
@@ -106,6 +128,7 @@ export default class App extends React.Component {
             <Text style={styles.iconText}>To °{this.isCelsius ? 'F' : 'C'}</Text>
           </View>
         </View>
+        {this.state.displayDevices ? this.renderDeviceMenu() : null}                
       </View>
     );
   }
@@ -115,8 +138,18 @@ export default class App extends React.Component {
 const portraitStyles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#333F48',
+    backgroundColor: '#d6d2c4',
     justifyContent: 'center'
+  },
+  header: {
+    flex: 2,
+    backgroundColor: '#BF5700',
+    alignItems: 'center'
+  },
+  headerText: {
+    marginTop: 20,
+    color: 'white',
+    fontSize: 75
   },
   toolbarContainer: {
     backgroundColor: '#BF5700',
@@ -136,13 +169,44 @@ const portraitStyles = StyleSheet.create({
   icon: {
     height: 30,
     width: 30,
+    marginTop: 5
   },
   iconText: {
     marginLeft: 30,
     marginRight: 30,
-    fontSize: 9,
+    fontSize: 16,
     color: 'white',
     marginBottom: 2
+  },
+  devicesContainer: {
+    position: 'absolute',
+    flex: 1,
+    alignSelf: 'center',
+    backgroundColor: '#BF5700FF',
+    alignItems: 'center',
+    borderRadius: 30,
+    borderWidth: 5,
+    borderColor: 'white'
+  },
+  deviceListing: {
+    color: 'white',
+    margin: 10,
+    fontSize: 30
+  },
+  deviceContainerTitle: {
+    color: 'white',
+    margin: 10,
+    fontSize: 35,
+  },
+  thickUnderline: {
+    borderBottomColor: 'white',
+    borderBottomWidth: 3,
+    width: 350
+  },
+  thinUnderline: {
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
+    width: 350
   },
   tempDisplay: {
     flex: 10,
@@ -152,17 +216,4 @@ const portraitStyles = StyleSheet.create({
 });
 
 const landscapeStyles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: '#333F48',
-  },
-  button: {
-    marginTop: 20,
-    flex: 1,
-    flexDirection: 'row'
-  },
-  tempDisplay: {
-    flex: 10,
-    backgroundColor: '#333F48',
-  },
 });

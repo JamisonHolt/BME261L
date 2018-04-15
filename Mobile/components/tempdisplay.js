@@ -10,7 +10,7 @@ export default class TempDisplay extends React.Component {
     super(props);
     this.state = {
       isPortrait: this.props.isPortrait,
-      temp: 80,
+      temp: 100,
       isCelsius: false,
       deviceID: '00:21:13:01:1C:51'
     };
@@ -20,6 +20,7 @@ export default class TempDisplay extends React.Component {
   }
 
   componentWillMount() {
+    return;
     // Connect to the specified device
     BluetoothSerial.connect(this.state.deviceID)
     .then((res) => {
@@ -117,7 +118,7 @@ const portraitStyles = StyleSheet.create({
   tempText: {
     flex: 9,
     color: '#BF5700',
-    fontSize: 100,
+    fontSize: 130,
     marginTop: 50
 
   },
@@ -125,7 +126,7 @@ const portraitStyles = StyleSheet.create({
     flex: 20,
     paddingLeft: 20,
     marginBottom: -200,
-    marginTop: -125
+    marginTop: -100
   }
 });
 
