@@ -2,8 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableHighlight, Image } from 'react-native';
 
 
-
+/**
+ * This component represents the toolbar at the bottom of our app
+ */
 export default class Toolbar extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -12,21 +15,22 @@ export default class Toolbar extends React.Component {
             isRecording: false,
             deviceID: null
         };
+
+        // Bind functions for allowing communication with App.js
+        this.toggleConnect = this.toggleConnect.bind(this);
         this.toggleRecording = this.toggleRecording.bind(this);
+        this.clear = this.clear.bind(this);
+        this.toggleUnits = this.toggleUnits.bind(this);
     }
 
-    getConnectButton() {
-        return (
-            <View style={styles.iconContainer}>
-                <TouchableHighlight underlayColor='#b35000' onPress={() => this.setState({ isConnected: !this.state.isConnected })} style={styles.touchableHighlight}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../icons/bluetooth.png')}
-                    />
-                </TouchableHighlight>
-                <Text style={styles.iconText}>{this.state.isConnected ? 'Detach' : 'Connect'}</Text>
-            </View>
-        );
+    /**
+     * Toggles the device's bluetooth connection state
+     */
+    toggleConnect() {
+        this.setState({
+            isConnected: !this.state.isConnected
+        });
+        this.props.toggleConnect();
     }
 
     /**
@@ -39,6 +43,43 @@ export default class Toolbar extends React.Component {
         this.props.toggleRecording();
     }
 
+    /**
+     * Clear's the tempdisplay graph by changing state temporarily, then changing back
+     */
+    clear() {
+        this.props.clear();
+    }
+
+    /**
+     * Toggles the device's displayed units between celsius and fahrenheit
+     */
+    toggleUnits() {
+        this.setState({
+            isCelsius: !this.state.isCelsius
+        });
+        this.props.toggleUnits();
+    }
+
+    /**
+     * Creates the connect button component - Toggles text based on state
+     */
+    getConnectButton() {
+        return (
+            <View style={styles.iconContainer}>
+                <TouchableHighlight underlayColor='#b35000' onPress={ this.toggleConnect } style={styles.touchableHighlight}>
+                    <Image
+                        style={styles.icon}
+                        source={require('../icons/bluetooth.png')}
+                    />
+                </TouchableHighlight>
+                <Text style={styles.iconText}>{this.state.isConnected ? 'Disconnect' : 'Connect'}</Text>
+            </View>
+        );
+    }
+
+    /**
+     * Creates the record button component - toggles icon and text based on state
+     */
     toggleRecordButton() {
         let imgText = null;
         let img = null;
@@ -62,10 +103,13 @@ export default class Toolbar extends React.Component {
         );
     }
 
+    /**
+     * Creates the clear button component
+     */
     getClearButton() {
         return (
             <View style={styles.iconContainer}>
-                <TouchableHighlight underlayColor='#b35000' onPress={() => { }} style={styles.touchableHighlight}>
+                <TouchableHighlight underlayColor='#b35000' onPress={ this.clear } style={styles.touchableHighlight}>
                     <Image
                         style={styles.icon}
                         source={require('../icons/clear.png')}
@@ -76,10 +120,13 @@ export default class Toolbar extends React.Component {
         );
     }
 
+    /**
+     * Creates the thermometer button component - toggles text (units) based on state
+     */
     getThermometerIcon() {
         return (
             <View style={styles.iconContainer}>
-                <TouchableHighlight underlayColor='#b35000' onPress={ this.props.updateCelsius } style={styles.touchableHighlight}>
+                <TouchableHighlight underlayColor='#b35000' onPress={ this.toggleUnits } style={styles.touchableHighlight}>
                     <Image
                         style={styles.icon}
                         source={require('../icons/thermometer.png')}
@@ -90,6 +137,9 @@ export default class Toolbar extends React.Component {
         );
     }
 
+    /**
+     * Combines each of our icons into a toolbar container to return
+     */
     render() {
         return (
             <View style={styles.toolbarContainer}>
@@ -102,7 +152,7 @@ export default class Toolbar extends React.Component {
     }
 }
 
-
+// CSS styles for our toolbar to make it look pertty
 const styles = StyleSheet.create({
     toolbarContainer: {
         backgroundColor: '#BF5700',
@@ -127,7 +177,7 @@ const styles = StyleSheet.create({
     iconText: {
         marginLeft: 30,
         marginRight: 30,
-        fontSize: 13,
+        fontSize: 10,
         color: 'white',
         marginBottom: 2
     }
