@@ -30,7 +30,8 @@
     "expo": "^25.0.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
-    "react-native-bluetooth-serial": "*",
+    "react-native-android-btserial": "github:yhozen/react-native-android-btserial",
+    "react-native-bluetooth-serial": "1.0.0-rc1",
     "react-native-svg": "^6.3.1",
     "react-native-svg-charts": "^3.0.2",
     "victory-native": "^0.17.4"

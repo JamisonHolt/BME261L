@@ -30,6 +30,11 @@ export default class App extends React.Component {
     this.clear = this.clear.bind(this);
     this.toggleUnits = this.toggleUnits.bind(this);
 
+    // Make sure BluetoothSerial knows what to count as a datapoint
+    BluetoothSerial.withDelimiter('\r\n')
+    .then(res => {})
+    .catch(res => {});
+
     // Find any paired ThermActive BT devices to pass into tempdisplay
     BluetoothSerial.list()
     .then((res) => {
@@ -103,8 +108,10 @@ export default class App extends React.Component {
         </View>
         <TempDisplay
           style={ styles.tempDisplay }
+          isPortrait={ this.state.isPortrait }
           deviceID={ this.state.deviceID }
           isConnected={ this.state.isConnected }
+          isRecording={ this.state.isConnected }
         />
         <Toolbar
           toggleConnect={this.toggleConnect}

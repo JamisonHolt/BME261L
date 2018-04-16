@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableHighlight, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, Image, Alert } from 'react-native';
 
 
 /**
@@ -37,17 +37,25 @@ export default class Toolbar extends React.Component {
      * If our device is recording, stop. Otherwise, start recording
      */
     toggleRecording() {
-        this.setState({
-            isRecording: !this.state.isRecording
-        });
-        this.props.toggleRecording();
+        if (!this.state.isConnected && !this.state.isRecording) {
+            Alert.alert('Record', 'Connect to ThermActive device first');
+        } else {
+            this.setState({
+                isRecording: !this.state.isRecording
+            });
+            this.props.toggleRecording();
+        }
     }
 
     /**
      * Clear's the tempdisplay graph by changing state temporarily, then changing back
      */
     clear() {
-        this.props.clear();
+        if (this.state.isRecording) {
+            Alert.alert('Clear', 'Stop recording first in order to clear');
+        } else {
+            this.props.clear();
+        }
     }
 
     /**

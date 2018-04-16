@@ -13,7 +13,7 @@ export default class TempDisplay extends React.Component {
       temp: 100,
       deviceID: null,
       isConnected: false,
-      recording: false,
+      isRecording: false,
       isCelsius: false
     };
     
@@ -21,13 +21,15 @@ export default class TempDisplay extends React.Component {
     this.serialDataLength = 7;
     this.maxBufferSize = MAX_NUM_BUFFER_ITEMS * this.serialDataLength;
 
-
-    // // Add an event listener to allow UI changes on phone orientation changes
-    // BluetoothSerial.addEventListener('change', () => {
-    //   this.setState({
-    //     isPortrait: this.updateIsPortrait()
-    //   });
-    // });
+    // Event listener to record as soon as any new temperature is recorded
+    BluetoothSerial.on('read', (data) => {
+      // only update state in the case that we are recording
+      if (this.state.isRecording) {
+        this.setState({
+          temp: parseFloat(data.data)
+        });
+      }
+    });
   }
 
 
@@ -39,8 +41,10 @@ export default class TempDisplay extends React.Component {
       this.setState({ deviceID: nextProps.deviceID });
     }
     if (this.props.isConnected !== nextProps.isConnected) {
-      // TODO: Add checking through BTSerial module in app.js
       nextProps.isConnected ? this.connect() : this.disconnect();
+    }
+    if (this.props.isRecording !== nextProps.isRecording) {
+      this.setState({ isRecording: !this.state.isRecording });
     }
   }
 
@@ -74,7 +78,8 @@ export default class TempDisplay extends React.Component {
       BluetoothSerial.disconnect()
       .then(res => {
         this.setState({
-          isConnected: false
+          isConnected: false,
+          isRecording: false
         });
         Alert.alert('Bluetooth', 'Disconnected from ThermActive device');
       })
