@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Vibration } from 'react-native';
+import { StyleSheet, Text, View, Vibration, Alert } from 'react-native';
 import RawChart from './chart';
 import BluetoothSerial from 'react-native-bluetooth-serial';
 
@@ -11,32 +11,76 @@ export default class TempDisplay extends React.Component {
     this.state = {
       isPortrait: this.props.isPortrait,
       temp: 100,
-      isCelsius: false,
-      deviceID: '00:21:13:01:1C:51'
+      deviceID: null,
+      isConnected: false,
+      recording: false,
+      isCelsius: false
     };
+    
     const MAX_NUM_BUFFER_ITEMS = 5;
     this.serialDataLength = 7;
     this.maxBufferSize = MAX_NUM_BUFFER_ITEMS * this.serialDataLength;
+
+
+    // // Add an event listener to allow UI changes on phone orientation changes
+    // BluetoothSerial.addEventListener('change', () => {
+    //   this.setState({
+    //     isPortrait: this.updateIsPortrait()
+    //   });
+    // });
   }
 
-  componentWillMount() {
-    return;
-    // Connect to the specified device
-    BluetoothSerial.connect(this.state.deviceID)
-    .then((res) => {
-      console.log('Connected to device');
-      // Make sure our serial is empty in case of device change
-      BluetoothSerial.clear();
-      this.beginReading();
-    })
-    .catch((err) => {
-      console.log('Issue connecting to device');
-    });
-  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isPortrait !== nextProps.isPortrait) {
       this.setState({ isPortrait: nextProps.isPortrait });
+    }
+    if (this.props.deviceID !== nextProps.deviceID) {
+      this.setState({ deviceID: nextProps.deviceID });
+    }
+    if (this.props.isConnected !== nextProps.isConnected) {
+      // TODO: Add checking through BTSerial module in app.js
+      nextProps.isConnected ? this.connect() : this.disconnect();
+    }
+  }
+
+  /**
+   * Connects to the bluetooth device provided in this component's deviceID prop
+   */
+  connect() {
+    // Block "Disconnecting" while trying to connect
+    this.setState({isConnected: 'Connecting'});
+    // Connect to the thermactive device
+    BluetoothSerial.connect(this.state.deviceID)
+    .then(res => {
+      // Make sure our serial is empty in case of device change
+      this.setState({
+        isConnected: true
+      });
+      Alert.alert('Bluetooth', 'Connected to ThermActive device');
+    })
+    .catch(err => {
+      Alert.alert('Bluetooth', 'Issue connecting to ThermActive device');
+    });
+  }
+
+  /**
+   * Disconnects to the currently connected bluetooth device
+   */
+  disconnect() {
+    if (this.state.isConnected === 'Connecting') {
+      return;
+    } else {
+      BluetoothSerial.disconnect()
+      .then(res => {
+        this.setState({
+          isConnected: false
+        });
+        Alert.alert('Bluetooth', 'Disconnected from ThermActive device');
+      })
+      .catch(err => {
+        Alert.alert('Bluetooth', 'Issue disconnecting from ThermActive device');
+      })
     }
   }
 

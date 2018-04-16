@@ -33,9 +33,8 @@ export default class App extends React.Component {
     // Find any paired ThermActive BT devices to pass into tempdisplay
     BluetoothSerial.list()
     .then((res) => {
-      const id = res.find(device => device.name === DEVICE_NAME).id;
       this.setState({
-        deviceID: id
+        deviceID: res.find(device => device.name === DEVICE_NAME).id
       });
     }).catch((err) => {
       alert("Issue Listing Paired devices");
@@ -103,8 +102,9 @@ export default class App extends React.Component {
           <Text style={styles.headerText}>ThermActive</Text>
         </View>
         <TempDisplay
-          style={styles.tempDisplay}
-          isPortrait={ this.state.isPortrait }
+          style={ styles.tempDisplay }
+          deviceID={ this.state.deviceID }
+          isConnected={ this.state.isConnected }
         />
         <Toolbar
           toggleConnect={this.toggleConnect}
