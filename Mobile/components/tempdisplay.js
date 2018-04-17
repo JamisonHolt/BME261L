@@ -9,7 +9,6 @@ export default class TempDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPortrait: this.props.isPortrait,
       fahrenheit: null,
       celsius: null,
       deviceID: null,
@@ -115,7 +114,6 @@ export default class TempDisplay extends React.Component {
     } else {
       tempText = currTemp.toFixed(1) + letter;
     }
-    const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
     return (
       <View style={ this.props.style }>
         <Text style={ styles.tempText }>{tempText}</Text>
@@ -134,7 +132,7 @@ export default class TempDisplay extends React.Component {
   }
 }
 
-const portraitStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   tempText: {
     flex: 9,
     color: '#BF5700',
@@ -147,20 +145,5 @@ const portraitStyles = StyleSheet.create({
     paddingLeft: 20,
     marginBottom: -200,
     marginTop: -100
-  }
-});
-
-const landscapeStyles = StyleSheet.create({
-  tempText: {
-    flex: 9,
-    flexDirection: 'row',
-    color: '#BF5700',
-    fontSize: 80
-  },
-  chartStyle: {
-    flex: 10,
-    flexDirection: 'row',
-    padding: 100,
-    marginTop: -200,
   }
 });

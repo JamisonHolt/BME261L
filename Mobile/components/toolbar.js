@@ -72,11 +72,7 @@ export default class Toolbar extends React.Component {
      * Clear's the tempdisplay graph by changing state temporarily, then changing back
      */
     toggleClear() {
-        if (this.state.isRecording) {
-            Alert.alert('Clear', 'Stop recording first in order to clear');
-        } else {
-            this.props.toggleClear();
-        }
+        this.props.toggleClear();
     }
 
     /**
@@ -168,7 +164,7 @@ export default class Toolbar extends React.Component {
      */
     render() {
         return (
-            <View style={styles.toolbarContainer}>
+            <View style={this.props.style}>
                 {this.getConnectButton()}
                 {this.toggleRecordButton()}
                 {this.getClearButton()}

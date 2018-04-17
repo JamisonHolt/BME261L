@@ -17,7 +17,6 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      isPortrait: this.updateIsPortrait(),
       isConnected: false,
       isRecording: false,
       clearState: false,
@@ -45,21 +44,6 @@ export default class App extends React.Component {
     }).catch((err) => {
       alert("Issue Listing Paired devices");
     });
-
-    // Add an event listener to allow UI changes on phone orientation changes
-    Dimensions.addEventListener('change', () => {
-      this.setState({
-        isPortrait: this.updateIsPortrait()
-      });
-    });
-  }
-
-  /**
-   * Updates the phone's current orientation state based on the screen dimensions
-   */
-  updateIsPortrait() {
-    const dim = Dimensions.get('screen');
-    return dim.width < dim.height;
   }
 
   /**
@@ -103,15 +87,15 @@ export default class App extends React.Component {
    * Render's our App's main UI by combining all children nodes
    */
   render() {
-    const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
     return (
       <View style={styles.background}>
+        {/* Creates our App Header */}
         <View style={styles.header}>
           <Text style={styles.headerText}>ThermActive</Text>
         </View>
+        {/* Creates our Temperature Display */}
         <TempDisplay
           style={ styles.tempDisplay }
-          isPortrait={ this.state.isPortrait }
           deviceID={ this.state.deviceID }
 
           isConnected={ this.state.isConnected }
@@ -123,7 +107,10 @@ export default class App extends React.Component {
           toggleClear={ this.toggleClear }
           toggleUnits={ this.toggleUnits }
         />
+        {/* Creates our Toolbar */}
         <Toolbar
+          style={ styles.toolbarDisplay }
+
           isConnected={ this.state.isConnected }
           isRecording={ this.state.isRecording }
           clearState={ this.state.clearState }
@@ -139,7 +126,7 @@ export default class App extends React.Component {
 }
 
 // CSS styles for making our app look good
-const portraitStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#d6d2c4',
@@ -160,7 +147,10 @@ const portraitStyles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
-});
-
-const landscapeStyles = StyleSheet.create({
+  toolbarDisplay: {
+    backgroundColor: '#BF5700',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 });
