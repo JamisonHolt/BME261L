@@ -84,7 +84,7 @@ export default class RawChart extends React.Component {
             label="Temperature"
             tickFormat={y => y}
             tickCount={10}
-            domain={ this.isCelsius ? this.CELS_DOMAIN : this.FAHR_DOMAIN }
+            domain={ this.state.isCelsius ? this.CELS_DOMAIN : this.FAHR_DOMAIN }
             style={{
               flex: 20,
               axis: { stroke: 'white'},
