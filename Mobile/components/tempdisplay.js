@@ -32,6 +32,9 @@ export default class TempDisplay extends React.Component {
     // Initialize our critical "warning" level temperature
     this.CRITICAL_FAHR_TEMP = 105;
 
+    // Bind all passed down callback functions
+    this.toggleConnect = this.toggleConnect.bind(this);
+
     // Prevent us from continuously alerting the user in case of dangerous temperature
     this.notAlertedYet = true
     
@@ -81,6 +84,7 @@ export default class TempDisplay extends React.Component {
     }
     if (this.state.clearState !== nextProps.clearState) {
       this.setState({ clearState: nextProps.clearState });
+      this.notAlertedYet = true;
     }
     if (this.state.isCelsius !== nextProps.isCelsius) {
       this.setState({ isCelsius: nextProps.isCelsius });

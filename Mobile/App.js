@@ -27,6 +27,12 @@ export default class App extends React.Component {
 
     // Constant that will always represent the name of our device to find
     this.DEVICE_NAME = 'ThermActive';
+
+    // Bind all state-changing methods of App in order to use as callback functions
+    this.toggleConnect = this.toggleConnect.bind(this);
+    this.toggleRecording = this.toggleRecording.bind(this);
+    this.toggleClear = this.toggleClear.bind(this);
+    this.toggleUnits = this.toggleUnits.bind(this);
   }
 
   /**
