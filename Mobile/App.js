@@ -5,8 +5,7 @@ import BluetoothSerial from 'react-native-bluetooth-serial';
 import TempDisplay from './components/tempdisplay';
 import Toolbar from './components/toolbar';
 
-// Name of our device - TODO: Change device's name to ThermActive
-const DEVICE_NAME = 'HC-06';
+const DEVICE_NAME = 'ThermActive';
 
 
 /**
