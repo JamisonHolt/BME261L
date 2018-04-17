@@ -135,7 +135,7 @@ export default class Toolbar extends React.Component {
     getClearButton() {
         return (
             <View style={styles.iconContainer}>
-                <TouchableHighlight underlayColor='#b35000' onPress={ this.clear } style={styles.touchableHighlight}>
+                <TouchableHighlight underlayColor='#b35000' onPress={ this.toggleClear } style={styles.touchableHighlight}>
                     <Image
                         style={styles.icon}
                         source={require('../icons/clear.png')}

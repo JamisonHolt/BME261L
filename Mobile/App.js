@@ -85,8 +85,8 @@ export default class App extends React.Component {
    * Clear's the tempdisplay graph by changing state temporarily, then changing back
    */
   toggleClear() {
-    this.seteState({
-      clearState: !this.clearState
+    this.setState({
+      clearState: !this.state.clearState
     });
   }
 
@@ -116,6 +116,7 @@ export default class App extends React.Component {
 
           isConnected={ this.state.isConnected }
           isRecording={ this.state.isRecording }
+          clearState={ this.state.clearState }
           isCelsius={ this.state.isCelsius }
           toggleConnect={ this.toggleConnect }
           toggleRecording={ this.toggleRecording }
@@ -125,6 +126,7 @@ export default class App extends React.Component {
         <Toolbar
           isConnected={ this.state.isConnected }
           isRecording={ this.state.isRecording }
+          clearState={ this.state.clearState }
           isCelsius={ this.state.isCelsius }
           toggleConnect={ this.toggleConnect }
           toggleRecording={ this.toggleRecording }

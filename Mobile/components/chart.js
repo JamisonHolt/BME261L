@@ -2,70 +2,72 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { VictoryChart, VictoryLine, VictoryAxis} from 'victory-native';
 
+
 export default class RawChart extends React.Component {
   constructor(props) {
     super(props);
-    // TODO: update dataSize to be much larger
-    const dataSize = 400;
-    let initialData = [];
-    let currDate = new Date();
-    currDate.setHours(currDate.getHours(), currDate.getMinutes() - dataSize);
-    for (let i=0; i<dataSize; i++) {
-      currDate.setHours(
-        currDate.getHours(),
-        currDate.getMinutes() + 1,
-        0,
-        0
-      );
-      initialData.push({
-        x: new Date(currDate),
-        y: 90 + i % 10
-      });
-    }
     this.state = {
-      temp: initialData,
-      isCelsius: this.props.isCelsius
+      fahrenheit: null,
+      celsius: null,
+      isCelsius: this.props.isCelsius,
+      clearState: this.props.clearState
     };
+
+    // Set default domain range and data
+    this.setDefaults();
   }
 
   componentWillReceiveProps(nextProps) {
-    //TODO: Update all temperatures when celsius/fahrenheit changed
-    if (this.props.temp !== nextProps.temp) {
-      let nextTemp = this.state.temp.slice(1);
-      nextTemp.push(nextProps.temp);
-      this.setState({temp: nextTemp});
+    if (this.props.isCelsius != nextProps.isCelsius) {
+      this.setState({ isCelsius: nextProps.isCelsius });
     }
-    if (this.props.isCelsius !== nextProps.isCelsius) {
-      this.setState({isCelsius: nextProps.isCelsius});
+    if (this.state.fahrenheit !== nextProps.fahrenheit) {
+      this.setState({ fahrenheit: nextProps.fahrenheit, celsius: nextProps.celsius });
+      const currDate = new Date();
+      this.fahrData.push({ x: currDate, y: parseFloat(nextProps.fahrenheit) });
+      this.celsData.push({ x: currDate, y: parseFloat(nextProps.celsius) });
+    }
+    if (this.state.clearState != nextProps.clearState) {
+      this.setState({ clearState: nextProps.clearState, celsius: null, fahrenheit: null });
+      this.setDefaults();
     }
   }
 
+  setDefaults() {
+    // Use two arrays in order to save time converting between units
+    this.fahrData = [];
+    this.celsData = [];
+
+    // Use domain constants to make sure our graph axes scale well for diff units
+    this.FAHR_DOMAIN = [80, 110];
+    this.CELS_DOMAIN = [26, 44];
+  }
+
+  getData() {
+    if (this.fahrData.length <= 1) {
+      return null;
+    }
+    return this.state.isCelsius ? this.celsData : this.fahrData;
+  }
+
   render() {
-    const transform = num => {
-      if (this.state.isCelsius) {
-        return (num - 32) * 5 / 9;
-      }
-      return num;
+    let victoryLine = null;
+    if (this.fahrData.length >= 2) {
+      victoryLine = (
+        <VictoryLine
+          data={this.state.isCelsius ? this.celsData : this.fahrData }
+          scale = {{ x: "time" }}
+          style = {{
+            flex: 1,
+            data: { stroke: "#BF5700" },
+          }}
+        />
+      );
     }
     return (
       <View style={ this.props.style }>
-        <VictoryChart style={{ flex: 1}} scale={{ x: "time" }} >
-          <VictoryLine
-            data={(() => {
-              // Convert fahrenheit to celsius if necessary
-              if (! this.state.isCelsius) {return this.state.temp;}
-              let data = this.state.temp.slice();
-              for (let i = 0; i < this.state.temp.length; i++) {
-                data[i]["y"] = transform(data[i]["y"]);
-              }
-              return data
-            })()}
-            scale={{ x: "time" }}
-            style={{
-              flex: 1,
-              data: { stroke: "#BF5700" },
-            }}
-          />
+        <VictoryChart style={{ flex: 1 }} scale={{ x: "time" }} >
+          {victoryLine}
           <VictoryAxis
             label="Time"
             tickFormat={x => x.toString().substring(16, 21)}
@@ -77,13 +79,12 @@ export default class RawChart extends React.Component {
               ticks: { stroke: 'white', size: 5 },
               tickLabels: { fontSize: 12, padding: 3.5, stroke: '#BF5700' }
             }}
-
           />
           <VictoryAxis dependentAxis
             label="Temperature"
             tickFormat={y => y}
             tickCount={10}
-            domain={[transform(80), transform(110)]}
+            domain={ this.isCelsius ? this.CELS_DOMAIN : this.FAHR_DOMAIN }
             style={{
               flex: 20,
               axis: { stroke: 'white'},

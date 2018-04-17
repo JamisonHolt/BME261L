@@ -3,14 +3,15 @@ import { StyleSheet, Text, View, Vibration, Alert } from 'react-native';
 import RawChart from './chart';
 import BluetoothSerial from 'react-native-bluetooth-serial';
 
-const CRITICAL_TEMP = 105;
+const CRITICAL_FAHR_TEMP = 105;
 
 export default class TempDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isPortrait: this.props.isPortrait,
-      temp: 100,
+      fahrenheit: null,
+      celsius: null,
       deviceID: null,
       isConnected: false,
       isRecording: false,
@@ -18,22 +19,20 @@ export default class TempDisplay extends React.Component {
       isCelsius: false
     };
     
-    const MAX_NUM_BUFFER_ITEMS = 5;
-    this.serialDataLength = 7;
-    this.maxBufferSize = MAX_NUM_BUFFER_ITEMS * this.serialDataLength;
-
     // Event listener to record as soon as any new temperature is recorded
     BluetoothSerial.on('read', (data) => {
-      const newTemp = parseFloat(data.data);
-      // only update state in the case that we are recording
-      if (this.state.isRecording) {
+      const newFahr = parseFloat(data.data);
+      // Check if temperature doesn't make sense, such as a temporary disconnection
+      if (60 > newFahr || newFahr > 120) {return;} 
+      else if (this.state.isRecording) {
+        // only update state in the case that we are recording
         this.setState({
-          temp: newTemp
+          fahrenheit: newFahr,
+          celsius: (newFahr - 32) * 5 / 9
         });
-        // TODO: Make sure this works properly
-        if (newTemp > CRITICAL_TEMP) {
+        if (newFahr > CRITICAL_FAHR_TEMP) {
           Vibration.vibrate(10000);
-          Alert.alert('Critical Temperature Reached!', 'Consider visiting a doctor');
+          Alert.alert('Dangerous Body Temperature Reached!', 'Consider visiting a doctor');
         }
       }
     });
@@ -108,10 +107,10 @@ export default class TempDisplay extends React.Component {
   }
 
   render() {
-    let currTemp = this.state.isCelsius ? (this.state.temp - 32) * 5 / 9 : this.state.temp;
+    let currTemp = this.state.isCelsius ? this.state.celsius : this.state.fahrenheit;
     const letter = this.state.isCelsius ? '°C' : '°F';
     let tempText = null;
-    if (!this.state.isRecording) {
+    if (!this.state.isRecording || this.state.celsius === null) {
       tempText = "N/A";
     } else {
       tempText = currTemp.toFixed(1) + letter;
@@ -121,8 +120,10 @@ export default class TempDisplay extends React.Component {
       <View style={ this.props.style }>
         <Text style={ styles.tempText }>{tempText}</Text>
         <RawChart style={ styles.chartStyle }
-          temp={ currTemp }
+          fahrenheit={ this.state.fahrenheit }
+          celsius={ this.state.celsius }
           isCelsius = { this.state.isCelsius }
+          clearState = { this.state.clearState }
         />
       </View>
     );
