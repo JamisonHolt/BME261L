@@ -113,9 +113,6 @@ export default class App extends React.Component {
           clearState={ this.state.clearState }
           isCelsius={ this.state.isCelsius }
           toggleConnect={ this.toggleConnect }
-          toggleRecording={ this.toggleRecording }
-          toggleClear={ this.toggleClear }
-          toggleUnits={ this.toggleUnits }
         />
         {/* Creates our Toolbar */}
         <Toolbar
@@ -126,6 +123,9 @@ export default class App extends React.Component {
           clearState={ this.state.clearState }
           isCelsius={ this.state.isCelsius }
           toggleConnect={ this.toggleConnect }
+          toggleRecording={this.toggleRecording}
+          toggleClear={this.toggleClear}
+          toggleUnits={this.toggleUnits}
         />
       </View>
     );
