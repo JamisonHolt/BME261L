@@ -7,6 +7,12 @@ import { VictoryChart, VictoryLine, VictoryAxis} from 'victory-native';
  * Our chart component to be combined with the entire tempdisplay component
  */
 export default class RawChart extends React.Component {
+  
+  /**
+   * Initializes our RawChart by binding methods (to allow)
+   * 
+   * @param {Map} props - properties passed from App.js to tempdisplay.js to chart.js
+   */
   constructor(props) {
     super(props);
     this.state = {

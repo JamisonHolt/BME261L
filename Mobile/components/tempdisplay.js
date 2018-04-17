@@ -1,11 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, Vibration, Alert } from 'react-native';
-import RawChart from './chart';
 import BluetoothSerial from 'react-native-bluetooth-serial';
 
-const CRITICAL_FAHR_TEMP = 105;
+// Import our self-made chart
+import RawChart from './chart';
 
+
+/**
+ * The entire TempDisplay module, which combines the chart with bluetooth and text
+ */
 export default class TempDisplay extends React.Component {
+
+  /**
+   * Initializes our TempDisplay by binding methods (to allow)
+   * 
+   * @param {Map} props - properties passed from App.js to tempdisplay.js
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +28,9 @@ export default class TempDisplay extends React.Component {
       clearState: false,
       isCelsius: false
     };
+
+    // Initialize our critical "warning" level temperature
+    this.CRITICAL_FAHR_TEMP = 105;
 
     // Prevent us from continuously alerting the user in case of dangerous temperature
     this.notAlertedYet = true
@@ -34,7 +47,7 @@ export default class TempDisplay extends React.Component {
           celsius: (newFahr - 32) * 5 / 9
         });
         // Alert user if the recorded state is a dangerous level by vibrating and sending msg
-        if (newFahr > CRITICAL_FAHR_TEMP && this.notAlertedYet) {
+        if (newFahr > this.CRITICAL_FAHR_TEMP && this.notAlertedYet) {
           this.notAlertedYet = false;
           Vibration.vibrate(5000);
           Alert.alert('Dangerous Body Temperature Reached!', 'Consider visiting a doctor');
