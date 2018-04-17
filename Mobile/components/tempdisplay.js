@@ -14,6 +14,7 @@ export default class TempDisplay extends React.Component {
       deviceID: null,
       isConnected: false,
       isRecording: false,
+      clearState: false,
       isCelsius: false
     };
     
@@ -23,44 +24,64 @@ export default class TempDisplay extends React.Component {
 
     // Event listener to record as soon as any new temperature is recorded
     BluetoothSerial.on('read', (data) => {
+      const newTemp = parseFloat(data.data);
       // only update state in the case that we are recording
       if (this.state.isRecording) {
         this.setState({
-          temp: parseFloat(data.data)
+          temp: newTemp
         });
+        // TODO: Make sure this works properly
+        if (newTemp > CRITICAL_TEMP) {
+          Vibration.vibrate(10000);
+          Alert.alert('Critical Temperature Reached!', 'Consider visiting a doctor');
+        }
       }
     });
   }
 
 
+  /**
+   * Allows our main app to pass down new properties, in order to sync app state
+   * 
+   * @param {Updated properties of our component} nextProps 
+   */
   componentWillReceiveProps(nextProps) {
-    if (this.props.isPortrait !== nextProps.isPortrait) {
-      this.setState({ isPortrait: nextProps.isPortrait });
+    if (this.state.deviceID !== nextProps.deviceID) {
+      this.setState({ deviceID: nextProps.deviceID })
     }
-    if (this.props.deviceID !== nextProps.deviceID) {
-      this.setState({ deviceID: nextProps.deviceID });
+    if (this.state.isConnected !== nextProps.isConnected) {
+      this.setState({ isConnected: nextProps.isConnected });
+      if (nextProps.isConnected === false) { this.disconnect(); }
+      else if (nextProps.isConnected === 'Connecting') { this.connect(); }
     }
-    if (this.props.isConnected !== nextProps.isConnected) {
-      nextProps.isConnected ? this.connect() : this.disconnect();
+    if (this.state.isRecording !== nextProps.isRecording) {
+      this.setState({ isRecording: nextProps.isRecording });
     }
-    if (this.props.isRecording !== nextProps.isRecording) {
-      this.setState({ isRecording: !this.state.isRecording });
+    if (this.state.clearState !== nextProps.clearState) {
+      this.setState({ clearState: nextProps.clearState });
+    }
+    if (this.state.isCelsius !== nextProps.isCelsius) {
+      this.setState({ isCelsius: nextProps.isCelsius });
     }
   }
 
+
+  /**
+   * If our device is recording, stop. Otherwise, start recording
+   */
+  toggleConnect() {
+    this.props.toggleConnect(true);
+  }
+  
   /**
    * Connects to the bluetooth device provided in this component's deviceID prop
    */
   connect() {
-    // Block "Disconnecting" while trying to connect
-    this.setState({isConnected: 'Connecting'});
     // Connect to the thermactive device
     BluetoothSerial.connect(this.state.deviceID)
     .then(res => {
       // Make sure our serial is empty in case of device change
-      this.setState({
-        isConnected: true
-      });
+      this.toggleConnect();
       Alert.alert('Bluetooth', 'Connected to ThermActive device');
     })
     .catch(err => {
@@ -72,15 +93,12 @@ export default class TempDisplay extends React.Component {
    * Disconnects to the currently connected bluetooth device
    */
   disconnect() {
+    // Prevent accidental changes while still trying to connect
     if (this.state.isConnected === 'Connecting') {
       return;
     } else {
       BluetoothSerial.disconnect()
       .then(res => {
-        this.setState({
-          isConnected: false,
-          isRecording: false
-        });
         Alert.alert('Bluetooth', 'Disconnected from ThermActive device');
       })
       .catch(err => {
@@ -89,67 +107,19 @@ export default class TempDisplay extends React.Component {
     }
   }
 
-  beginReading() {
-    setInterval(() => {
-      // Only read in temperature if value available in buffer
-      BluetoothSerial.available()
-      .then((numAvailable) => {
-        if (numAvailable >= 7) {
-          this.readTemp();
-        }
-      })
-      .catch((err) => {
-        console.log("Error getting available serial reads");
-      });
-    }, 50);
-  }
-
-  readTemp() {
-    BluetoothSerial.readUntilDelimiter("\r\n")
-    .then((tempString) => {
-      // Make sure any "shredded" serial values are filtered out
-      if (tempString.length === this.serialDataLength) {
-        const tempFloat = parseFloat(tempString);
-        this.setState(() => {
-          // Add temperature to state for display
-          return {
-            temp: tempFloat,
-          };
-          
-        });
-        // TODO: Make sure this works properly
-        if (tempFloat > CRITICAL_TEMP) {
-          Vibration.vibrate(10000);
-        }
-      }
-      // Automatically clean buffer in case of too many values
-      this.clearBuffer();
-    })
-    .catch((err) => {
-      console.log("Error reading temp");
-    });
-  }
-
-  clearBuffer() {
-    // Make sure to only clear buffer if too many values
-    BluetoothSerial.available()
-    .then((numAvailable) => {
-      if (numAvailable > this.maxBufferSize) {
-        BluetoothSerial.clear();
-      }
-    })
-    .catch((err) => {
-      console.log("Error clearing serial buffer");
-    });
-  }
-
   render() {
     let currTemp = this.state.isCelsius ? (this.state.temp - 32) * 5 / 9 : this.state.temp;
     const letter = this.state.isCelsius ? '°C' : '°F';
+    let tempText = null;
+    if (!this.state.isRecording) {
+      tempText = "N/A";
+    } else {
+      tempText = currTemp.toFixed(1) + letter;
+    }
     const styles = this.state.isPortrait ? portraitStyles : landscapeStyles;
     return (
       <View style={ this.props.style }>
-        <Text style={ styles.tempText }>{currTemp.toFixed(1) + letter}</Text>
+        <Text style={ styles.tempText }>{tempText}</Text>
         <RawChart style={ styles.chartStyle }
           temp={ currTemp }
           isCelsius = { this.state.isCelsius }

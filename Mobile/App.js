@@ -20,6 +20,7 @@ export default class App extends React.Component {
       isPortrait: this.updateIsPortrait(),
       isConnected: false,
       isRecording: false,
+      clearState: false,
       isCelsius: false,
       deviceID: null
     }
@@ -27,7 +28,7 @@ export default class App extends React.Component {
     // Bind all callback functions to use in toolbar component
     this.toggleConnect = this.toggleConnect.bind(this);
     this.toggleRecording = this.toggleRecording.bind(this);
-    this.clear = this.clear.bind(this);
+    this.toggleClear = this.toggleClear.bind(this);
     this.toggleUnits = this.toggleUnits.bind(this);
 
     // Make sure BluetoothSerial knows what to count as a datapoint
@@ -65,9 +66,9 @@ export default class App extends React.Component {
    * Toggles the device's bluetooth connection state - passed into toolbar as a callback
    * Bluetooth connection state passed into tempdisplay to decide if recording possible
    */
-  toggleConnect() {
+  toggleConnect(newState) {
     this.setState({
-      isConnected: !this.state.isConnected
+      isConnected: newState
     });
   }
 
@@ -83,8 +84,10 @@ export default class App extends React.Component {
   /**
    * Clear's the tempdisplay graph by changing state temporarily, then changing back
    */
-  clear() {
-    
+  toggleClear() {
+    this.seteState({
+      clearState: !this.clearState
+    });
   }
 
   /**
@@ -110,14 +113,23 @@ export default class App extends React.Component {
           style={ styles.tempDisplay }
           isPortrait={ this.state.isPortrait }
           deviceID={ this.state.deviceID }
+
           isConnected={ this.state.isConnected }
-          isRecording={ this.state.isConnected }
+          isRecording={ this.state.isRecording }
+          isCelsius={ this.state.isCelsius }
+          toggleConnect={ this.toggleConnect }
+          toggleRecording={ this.toggleRecording }
+          toggleClear={ this.toggleClear }
+          toggleUnits={ this.toggleUnits }
         />
         <Toolbar
-          toggleConnect={this.toggleConnect}
-          toggleRecording={this.toggleRecording}
-          clear={this.clear}
-          toggleUnits={this.toggleUnits}
+          isConnected={ this.state.isConnected }
+          isRecording={ this.state.isRecording }
+          isCelsius={ this.state.isCelsius }
+          toggleConnect={ this.toggleConnect }
+          toggleRecording={ this.toggleRecording }
+          toggleClear={ this.toggleClear }
+          toggleUnits={ this.toggleUnits }
         />
       </View>
     );

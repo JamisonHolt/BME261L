@@ -10,39 +10,60 @@ export default class Toolbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isCelsius: false,
             isConnected: false,
             isRecording: false,
-            deviceID: null
+            clearState: false,
+            isCelsius: false
         };
 
         // Bind functions for allowing communication with App.js
         this.toggleConnect = this.toggleConnect.bind(this);
         this.toggleRecording = this.toggleRecording.bind(this);
-        this.clear = this.clear.bind(this);
+        this.toggleClear = this.toggleClear.bind(this);
         this.toggleUnits = this.toggleUnits.bind(this);
+    }
+
+    /**
+     * Allows our main app to pass down new properties, in order to sync app state
+     * 
+     * @param {Updated properties of our component} nextProps 
+     */
+    componentWillReceiveProps(nextProps) {
+        if (this.state.isConnected !== nextProps.isConnected) {
+            this.setState({ isConnected: nextProps.isConnected });
+        }
+        if (this.state.isRecording !== nextProps.isRecording) {
+            this.setState({ isRecording: nextProps.isRecording });
+        }
+        if (this.state.clearState !== nextProps.clearState) {
+            this.setState({ clearState: nextProps.clearState });
+        }
+        if (this.state.isCelsius !== nextProps.isCelsius) {
+            this.setState({ isCelsius: nextProps.isCelsius });
+        }
     }
 
     /**
      * Toggles the device's bluetooth connection state
      */
     toggleConnect() {
-        this.setState({
-            isConnected: !this.state.isConnected
-        });
-        this.props.toggleConnect();
+        if (this.state.isConnected === false) {
+            this.props.toggleConnect('Connecting');
+        } else if (this.state.isConnected === true) {
+            if (this.state.isRecording) {
+                this.props.toggleRecording();
+            }
+            this.props.toggleConnect(false);
+        }
     }
 
     /**
      * If our device is recording, stop. Otherwise, start recording
      */
     toggleRecording() {
-        if (!this.state.isConnected && !this.state.isRecording) {
+        if (!this.state.isConnected) {
             Alert.alert('Record', 'Connect to ThermActive device first');
         } else {
-            this.setState({
-                isRecording: !this.state.isRecording
-            });
             this.props.toggleRecording();
         }
     }
@@ -50,11 +71,11 @@ export default class Toolbar extends React.Component {
     /**
      * Clear's the tempdisplay graph by changing state temporarily, then changing back
      */
-    clear() {
+    toggleClear() {
         if (this.state.isRecording) {
             Alert.alert('Clear', 'Stop recording first in order to clear');
         } else {
-            this.props.clear();
+            this.props.toggleClear();
         }
     }
 
@@ -62,9 +83,6 @@ export default class Toolbar extends React.Component {
      * Toggles the device's displayed units between celsius and fahrenheit
      */
     toggleUnits() {
-        this.setState({
-            isCelsius: !this.state.isCelsius
-        });
         this.props.toggleUnits();
     }
 
