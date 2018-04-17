@@ -1,48 +1,53 @@
 import React from 'react';
-import { StyleSheet, Dimensions, View, Text, TouchableHighlight, Image} from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import BluetoothSerial from 'react-native-bluetooth-serial';
 
+// Retrieve self-made components
 import TempDisplay from './components/tempdisplay';
 import Toolbar from './components/toolbar';
-
-const DEVICE_NAME = 'ThermActive';
-
 
 /**
  * This component represents our main app, which combines other components into one piece
  */
 export default class App extends React.Component {
   
+  /**
+   * Constructor for our main app - initializes state
+   */
   constructor() {
     super();
     this.state = {
+      deviceID: null,
+
       isConnected: false,
       isRecording: false,
       clearState: false,
-      isCelsius: false,
-      deviceID: null
+      isCelsius: false
     }
-    
-    // Bind all callback functions to use in toolbar component
-    this.toggleConnect = this.toggleConnect.bind(this);
-    this.toggleRecording = this.toggleRecording.bind(this);
-    this.toggleClear = this.toggleClear.bind(this);
-    this.toggleUnits = this.toggleUnits.bind(this);
 
+    // Constant that will always represent the name of our device to find
+    this.DEVICE_NAME = 'ThermActive';
+  }
+
+  /**
+   * Sets necessary bluetooth parameters before the app even loads in order to
+   * save time, such as finding the ThermActive device under parings
+   */
+  componentWillMount() {
     // Make sure BluetoothSerial knows what to count as a datapoint
     BluetoothSerial.withDelimiter('\r\n')
-    .then(res => {})
-    .catch(res => {});
+      .then(res => { })
+      .catch(res => { });
 
     // Find any paired ThermActive BT devices to pass into tempdisplay
     BluetoothSerial.list()
-    .then((res) => {
-      this.setState({
-        deviceID: res.find(device => device.name === DEVICE_NAME).id
+      .then((res) => {
+        this.setState({
+          deviceID: res.find(device => device.name === this.DEVICE_NAME).id
+        });
+      }).catch((err) => {
+        Alert.alert("Bluetooth Error", "Issue listing this phone's paired devices");
       });
-    }).catch((err) => {
-      alert("Issue Listing Paired devices");
-    });
   }
 
   /**
@@ -115,16 +120,13 @@ export default class App extends React.Component {
           clearState={ this.state.clearState }
           isCelsius={ this.state.isCelsius }
           toggleConnect={ this.toggleConnect }
-          toggleRecording={ this.toggleRecording }
-          toggleClear={ this.toggleClear }
-          toggleUnits={ this.toggleUnits }
         />
       </View>
     );
   }
 }
 
-// CSS styles for making our app look good
+// CSS styles for our app to make it look pertty
 const styles = StyleSheet.create({
   background: {
     flex: 1,

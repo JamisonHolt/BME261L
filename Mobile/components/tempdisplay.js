@@ -12,11 +12,15 @@ export default class TempDisplay extends React.Component {
       fahrenheit: null,
       celsius: null,
       deviceID: null,
+
       isConnected: false,
       isRecording: false,
       clearState: false,
       isCelsius: false
     };
+
+    // Prevent us from continuously alerting the user in case of dangerous temperature
+    this.notAlertedYet = true
     
     // Event listener to record as soon as any new temperature is recorded
     BluetoothSerial.on('read', (data) => {
@@ -29,8 +33,10 @@ export default class TempDisplay extends React.Component {
           fahrenheit: newFahr,
           celsius: (newFahr - 32) * 5 / 9
         });
-        if (newFahr > CRITICAL_FAHR_TEMP) {
-          Vibration.vibrate(10000);
+        // Alert user if the recorded state is a dangerous level by vibrating and sending msg
+        if (newFahr > CRITICAL_FAHR_TEMP && this.notAlertedYet) {
+          this.notAlertedYet = false;
+          Vibration.vibrate(5000);
           Alert.alert('Dangerous Body Temperature Reached!', 'Consider visiting a doctor');
         }
       }
@@ -39,14 +45,19 @@ export default class TempDisplay extends React.Component {
 
 
   /**
-   * Allows our main app to pass down new properties, in order to sync app state
-   * 
-   * @param {Updated properties of our component} nextProps 
-   */
+     * Allows our main app to pass down new properties, in order to sync app state. This is called every
+     *   time that we update the parent's state, leading to synchronization of state between components
+     * 
+     * @param {Map} nextProps - Map of TempDisplay properties to be updated. Called when parent changes state
+     */
   componentWillReceiveProps(nextProps) {
+    // Once the parent finds our bluetooth device, save it
     if (this.state.deviceID !== nextProps.deviceID) {
       this.setState({ deviceID: nextProps.deviceID })
     }
+    // Update connections status when needed.
+    //   If connecting, connect and then update state to true
+    //   if disconnected, make sure device follows through and disconnects, updating to false
     if (this.state.isConnected !== nextProps.isConnected) {
       this.setState({ isConnected: nextProps.isConnected });
       if (nextProps.isConnected === false) { this.disconnect(); }
@@ -65,7 +76,7 @@ export default class TempDisplay extends React.Component {
 
 
   /**
-   * If our device is recording, stop. Otherwise, start recording
+   * Update's parent's recording state to opposite of current state
    */
   toggleConnect() {
     this.props.toggleConnect(true);
@@ -78,7 +89,7 @@ export default class TempDisplay extends React.Component {
     // Connect to the thermactive device
     BluetoothSerial.connect(this.state.deviceID)
     .then(res => {
-      // Make sure our serial is empty in case of device change
+      // Update parent's state to true after the device has successfully connected
       this.toggleConnect();
       Alert.alert('Bluetooth', 'Connected to ThermActive device');
     })
@@ -91,10 +102,11 @@ export default class TempDisplay extends React.Component {
    * Disconnects to the currently connected bluetooth device
    */
   disconnect() {
-    // Prevent accidental changes while still trying to connect
+    // Use 'Connecting' status as way to block "disconnecting" before we've finished connecting
     if (this.state.isConnected === 'Connecting') {
       return;
     } else {
+      // Disconnect from serial and alert the user
       BluetoothSerial.disconnect()
       .then(res => {
         Alert.alert('Bluetooth', 'Disconnected from ThermActive device');
@@ -106,13 +118,18 @@ export default class TempDisplay extends React.Component {
   }
 
   render() {
+    // Find the correct formatting of the temperature text based on current unit type
     let currTemp = this.state.isCelsius ? this.state.celsius : this.state.fahrenheit;
     const letter = this.state.isCelsius ? '°C' : '°F';
     let tempText = null;
+
     if (!this.state.isRecording || this.state.celsius === null) {
+      // Hide temperature status if we are not recording - doesn't make sense to show random num
       tempText = "N/A";
     } else {
+      // Format our number to 1 decimal point (2 looks bad and isn't necessary)
       tempText = currTemp.toFixed(1) + letter;
+    
     }
     return (
       <View style={ this.props.style }>
@@ -126,12 +143,9 @@ export default class TempDisplay extends React.Component {
       </View>
     );
   }
-
-  getRecentTemp() {
-    return this.state.data[this.state.ptr];
-  }
 }
 
+// CSS styles for our tempdisplay to make it look pertty
 const styles = StyleSheet.create({
   tempText: {
     flex: 9,
